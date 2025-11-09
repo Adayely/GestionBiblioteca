@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controladores.PantallaMulta">
+
+    <top>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <HBox spacing="10">
+                <Label text="Cédula Usuario:"/>
+                <TextField fx:id="txtCedula"/>
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Días de retraso:"/>
+                <TextField fx:id="txtDias"/>
+                <CheckBox fx:id="chkDanado" text="Libro Dañado"/>
+                <CheckBox fx:id="chkPerdido" text="Libro Perdido"/>
+                <Button text="Registrar Multa" onAction="#registrarMulta"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <ListView fx:id="listaMultas" style="-fx-padding: 10;"/>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" style="-fx-padding: 10;">
+            <Button text="Pagar Multa" onAction="#pagarMulta"/>
+            <Button text="Actualizar" onAction="#actualizar"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
