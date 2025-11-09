@@ -1,46 +1,29 @@
 package modelo;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GestorMulta {
 
-    private File archivo = new File("src/main/resources/data/multas.txt");
+    private List<String> multas = new ArrayList<>();
 
-    public GestorMulta() {
-        try { archivo.createNewFile(); } catch(Exception e){}
-    }
+    public String generarMulta(String cedula, int dias, boolean danado, boolean perdido) {
+        double total = dias * 0.50;
 
-    public double calcularMulta(int dias, boolean danado, boolean perdido) {
-        double multa = dias * 0.50;
-        if (danado) multa += 5.0;
-        if (perdido) multa += 20.0;
+        if (danado) total += 5.0;
+        if (perdido) total += 20.0;
+
+        String multa = "Cédula: " + cedula + " | Total: $" + total;
+        multas.add(multa);
         return multa;
     }
 
-    public void guardarMulta(Multa m) {
-        try(PrintWriter pw = new PrintWriter(new FileWriter(archivo, true))){
-            pw.println(m.getCedula() + ";" + m.getDiasRetraso() + ";" +
-                    m.isDanado() + ";" + m.isPerdido() + ";" + m.getTotal());
-        } catch(Exception e){ e.printStackTrace(); }
+    public String registrarPagoMulta(String multa) {
+        multas.remove(multa);
+        return "Pagada: " + multa;
     }
 
-    public List<Multa> cargarMultas() {
-        List<Multa> lista = new ArrayList<>();
-        try(BufferedReader br = new BufferedReader(new FileReader(archivo))){
-            String linea;
-            while((linea = br.readLine()) != null){
-                String[] p = linea.split(";");
-                lista.add(new Multa(
-                        p[0],
-                        Integer.parseInt(p[1]),
-                        Boolean.parseBoolean(p[2]),
-                        Boolean.parseBoolean(p[3]),
-                        Double.parseDouble(p[4])
-                ));
-            }
-        } catch(Exception e){}
-        return lista;
+    public List<String> cargarMultas() {
+        return multas;
     }
 }
